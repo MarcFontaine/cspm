@@ -1,4 +1,4 @@
-#CSPM-Frontend
+# CSPM-Frontend
 
 CSP-M is the machine readable syntax of CSP (concurrent sequential processes)
 as used by the formal methods tools FDR, Probe and ProB.
