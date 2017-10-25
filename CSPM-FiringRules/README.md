@@ -9,3 +9,5 @@ To use this package one has to provide instances for the classes and type famili
 defined in the CSPM-CoreLanguage package.
 The package contains two mock-implementations that provide these instances.
 The CSPM-Interpreter package contains an other implementation.
+
+## [Haddock documentation](http://hackage.haskell.org/package/CSPM-FiringRules)
