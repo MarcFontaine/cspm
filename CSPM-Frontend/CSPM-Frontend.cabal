@@ -37,12 +37,10 @@ library
     ,transformers >= 0.5 && < 0.6
     ,dlist >=0.7 && < 0.9
     ,syb >= 0.7 && < 0.8
-    ,ghc-prim >=0.5 && < 0.6
 
   Default-Language: Haskell2010
   Other-Extensions:
      DeriveDataTypeable
---     ,DeriveGeneric
   GHC-Options: -funbox-strict-fields -O2 -Wall
   Hs-Source-Dirs:       src
   Exposed-modules:
