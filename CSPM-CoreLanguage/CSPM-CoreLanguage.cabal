@@ -20,7 +20,7 @@ Extra-Source-Files:  README.md
                     
 Source-Repository head
   type:     git
-  location: git://github.com/MarcFontaine/si-clock
+  location: git://github.com/MarcFontaine/cspm
 
 Library
   Build-Depends:
