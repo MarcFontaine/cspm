@@ -1,11 +1,28 @@
 # CSPM Interpreter and Animator
 
-This repository contains the Haskell based CSPM tools Dusseldorf.
-CSPM is the machine-readable syntax for CSP specifications.
-CSP (Communicating Sequential Processes) is a formalism for specifying
-and analyzing concurrent systems that communicate via events.
+## CSP (Communicating Sequential Processes)
+CSP is a formalism for concurrency.
+A concurrent system is described as a number of processes that communicate
+and synchronize via events.
+CSP allows to precisely specify and analyze concurrent systems.
+For example, with CSP one can prove the there are no deadlocks in a system
+or that a system satisfies some safety properties.
 
-## Libraries
+## Erlang and Go
+The concepts from CSP have influenced many real world designs,
+for example the event-based synchronization in languages like Go and Erlang.
+
+## CSPM and tool support
+Several tools are available for checking CSP specifications.
+FDR, ProB and this Haskell tools use an input language called CSPM.
+CSPM (the machine-readable syntax for CSP) is a small programming language
+that combines the core CSP constructs like processes and events with a small
+functional programming language.
+CSPM is a specification language not a general purpose programming language.
+Tools can automatically check CSPM code for properties
+like absense of deadlock or safety properties.
+
+## Haskell CSPM tools.
 The Repository contains several Haskell cabal packages:
 
 * CSPM-Frontend (parser for CSPM-syntax)
