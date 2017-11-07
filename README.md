@@ -25,12 +25,12 @@ like absense of deadlock or safety properties.
 ## Haskell CSPM tools.
 The Repository contains several Haskell cabal packages:
 
-* CSPM-Frontend (parser for CSPM-syntax)
-* CSPM-CoreLanguage (definition of processes and events)
-* CSPM-FiringRules (semantics for Processes and events)
-* CSPM-Interpreter (functional sub-language)
-* CSPM-ToProlog (dump CSPM syntax trees as Prolog)
-* CSPM-cspm (main executable)
+* [![Hackage](https://img.shields.io/hackage/v/CSPM-Frontend.svg)](http://hackage.haskell.org/package/CSPM-Frontend) CSPM-Frontend  (parser for CSPM-syntax)
+* [![Hackage](https://img.shields.io/hackage/v/CSPM-CoreLanguage.svg)](http://hackage.haskell.org/package/CSPM-CoreLanguage) CSPM-CoreLanguage (definition of processes and events)
+* [![Hackage](https://img.shields.io/hackage/v/CSPM-FiringRules.svg)](http://hackage.haskell.org/package/CSPM-FiringRules) CSPM-FiringRules (semantics for Processes and events)
+*  [![Hackage](https://img.shields.io/hackage/v/CSPM-Interpreter.svg)](http://hackage.haskell.org/package/CSPM-Interpreter) CSPM-Interpreter (functional sub-language)
+*  [![Hackage](https://img.shields.io/hackage/v/CSPM-ToProlog.svg)](http://hackage.haskell.org/package/CSPM-ToProlog) CSPM-ToProlog (dump CSPM syntax trees as Prolog)
+*  [![Hackage](https://img.shields.io/hackage/v/CSPM-cspm.svg)](http://hackage.haskell.org/package/CSPM-cspm) CSPM-cspm (main executable)
 
 ## Executable
 The CSPM-cspm package provides the _cspm_ executable.

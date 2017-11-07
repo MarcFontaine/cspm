@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  Main.Args
--- Copyright   :  (c) Fontaine 2010-2011
+-- Copyright   :  (c) Fontaine 2010-2017
 -- License     :  BSD3
 --
--- Maintainer  :  Fontaine@cs.uni-duesseldorf.de
+-- Maintainer  :  Marc.Fontaine@gmx.de
 -- Stability   :  experimental
 -- Portability :  GHC-only
 --

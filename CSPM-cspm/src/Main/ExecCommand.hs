@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  Main.ExecCommand
--- Copyright   :  (c) Fontaine 2010-2011
+-- Copyright   :  (c) Fontaine 2010-2017
 -- License     :  BSD3
 --
--- Maintainer  :  Fontaine@cs.uni-duesseldorf.de
+-- Maintainer  :  Marc.Fontaine@gmx.de
 -- Stability   :  experimental
 -- Portability :  GHC-only
 --
@@ -76,8 +76,9 @@ execCommand Info {..} = do
     ,"  cspm info",nl
     ,"  cspm eval '3+2'",nl
     ,nl
-    ,"Copyright (c) Marc Fontaine 2007-2014",nl
+    ,"Copyright (c) Marc Fontaine 2007-2017",nl
     ,"Source code available at: http://hackage.haskell.org/package/CSPM-cspm",nl
+    ,"https://github.com/MarcFontaine/cspm",nl
     ,"Email : Marc.Fontaine@gmx.de",nl
     ]
   where nl = "\n"
