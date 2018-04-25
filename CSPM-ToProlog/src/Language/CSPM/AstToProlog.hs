@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Language.CSPM.AstToProlog
--- Copyright   :  (c) Fontaine 2012
+-- Copyright   :  (c) Fontaine 2012-2018
 -- License     :  BSD3
 --
 -- Maintainer  :  Fontaine@cs.uni-duesseldorf.de
@@ -19,6 +19,7 @@ module Language.CSPM.AstToProlog
   )
 where
 
+import Prelude hiding ((<>))
 import Language.CSPM.Rename (ModuleFromRenaming)
 import Language.CSPM.AST as AST
 import Language.CSPM.CompileAstToProlog (mkSrcLoc)

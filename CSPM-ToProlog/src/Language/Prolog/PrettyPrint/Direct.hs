@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Language.Prolog.PrettyPrint.Direct
--- Copyright   :  (c) Fontaine 2010 - 2011
+-- Copyright   :  (c) Fontaine 2010 - 2018
 -- License     :  BSD3
 --
 -- Maintainer  :  fontaine@cs.uni-duesseldorf.de
@@ -28,6 +28,7 @@ module Language.Prolog.PrettyPrint.Direct
 
 where
 
+import Prelude hiding ((<>))
 import Text.PrettyPrint
 import Data.Char
 import Numeric (showHex)

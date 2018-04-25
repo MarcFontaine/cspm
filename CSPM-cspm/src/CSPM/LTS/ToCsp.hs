@@ -16,6 +16,7 @@ module CSPM.LTS.ToCsp
   )
 where
 
+import Prelude hiding ((<>))
 import CSPM.CoreLanguage hiding (Field)
 
 import CSPM.Interpreter (INT) -- todo : remove this dependency

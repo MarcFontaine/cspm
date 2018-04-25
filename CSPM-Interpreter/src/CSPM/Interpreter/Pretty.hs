@@ -14,6 +14,7 @@
 module CSPM.Interpreter.Pretty
 where
 
+import Prelude hiding ((<>))
 import CSPM.Interpreter.Types
 import CSPM.Interpreter.ClosureSet (closureToSet)
 
