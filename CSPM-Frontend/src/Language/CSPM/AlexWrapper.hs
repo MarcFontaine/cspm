@@ -21,17 +21,17 @@ import Data.List
 import Control.Applicative (Applicative(..))
 import Control.Monad       (liftM, ap)
 
-type AlexInput = (AlexPosn,     -- current position,
-                  Char,         -- previous char
-                  [Byte],       -- pending bytes on current char
-                  String)       -- current input string
+type AlexInput = (AlexPosn,     -- ^ current position,
+                  Char,         -- ^ previous char
+                  [Byte],       -- ^ pending bytes on current char
+                  String)       -- ^ current input string
 
 type Byte = Word8
 
 data AlexState = AlexState {
    alex_input :: AlexInput
-  ,alex_scd :: !Int 	-- the current startcode
-  ,alex_cnt :: !Int 	-- number of tokens
+  ,alex_scd :: !Int       -- ^ the current startcode
+  ,alex_cnt :: !Int       -- ^ number of tokens
   }
 
 runAlex :: String -> Alex a -> Either LexError a

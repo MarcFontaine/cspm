@@ -19,6 +19,7 @@ module Language.CSPM.PrettyPrinter
 )
 where
 
+import Prelude hiding ((<>))
 import Text.PrettyPrint.HughesPJClass
 
 import Language.CSPM.AST

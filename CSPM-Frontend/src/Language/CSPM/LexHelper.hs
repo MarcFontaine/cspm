@@ -16,11 +16,11 @@ import qualified Language.CSPM.Lexer as Lexer (scanner)
 import Language.CSPM.Token (Token(..), LexError(..))
 import Language.CSPM.TokenClasses (PrimToken(..))
 import Language.CSPM.UnicodeSymbols (lookupDefaultSymbol)
-import Control.Monad.IO.Class
-import qualified Data.Set as Set
 
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Except (ExceptT, runExceptT, throwE)
+import qualified Data.Set as Set
 import qualified Data.DList as DList
-import Control.Monad.Trans.Either
 
 -- | lex a String .
 lexPlain :: String -> Either LexError [Token]
@@ -52,16 +52,21 @@ data FilePart
 -- | lex input-string and inport all includes files
 lexInclude :: String -> IO (Either LexError [Token])
 lexInclude input
-   = eitherT (return . Left) (return . Right . concat . DList.toList) $ lexInclude2 input
+   = runExceptT $ (fmap (concat . DList.toList) $ lexInclude2 input)
 
-lexInclude2 :: String -> EitherT LexError IO Chunks
+lexInclude2 :: String -> ExceptT LexError IO Chunks
 lexInclude2 input = do
         hoistEither $ lexPlain input
     >>= hoistEither . splitIncludes []
     >>= mapM processPart
     >>= return . DList.concat
+    where
+     hoistEither :: Either LexError x -> ExceptT LexError IO x
+     hoistEither x = case x of
+         Left err -> throwE err
+         Right r -> return r
 
-processPart :: FilePart -> EitherT LexError IO Chunks
+processPart :: FilePart -> ExceptT LexError IO Chunks
 processPart part = case part of
     Toks ch -> return $ DList.singleton $ ch
     Include fname -> (liftIO $ readFile fname) >>= lexInclude2

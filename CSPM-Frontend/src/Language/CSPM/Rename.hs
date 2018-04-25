@@ -36,7 +36,7 @@ import Data.Generics.Aliases (mkT)
 import Data.Typeable (Typeable)
 import Control.Exception (Exception)
 
-import Control.Monad.Error
+import Control.Monad.Trans.Except (Except, runExcept, throwE)
 import Control.Monad.State
 import Data.Set (Set)
 import qualified Data.Map as Map
@@ -63,7 +63,7 @@ data FromRenaming deriving Typeable
 renameModule ::
      ModuleFromParser
   -> Either RenameError (ModuleFromRenaming, RenameInfo)
-renameModule m = do
+renameModule m = runExcept $ do
   let m' = mergeFunBinds m
   st <- execStateT (initPrelude >> rnModule m') initialRState
   return
@@ -71,7 +71,7 @@ renameModule m = do
      applyRenaming m' (identDefinition st) (identUse st)
     ,st)
 
-type RM x = StateT RenameInfo (Either RenameError) x
+type RM x = StateT RenameInfo (Except RenameError) x
 
 type UniqueName = Int
 
@@ -113,11 +113,6 @@ data RenameError
 
 instance Exception RenameError
 
-
-instance Error RenameError where
-  noMsg = RenameError { renameErrorMsg = "no Messsage", renameErrorLoc = SrcLoc.NoLocation }
-  strMsg m = RenameError { renameErrorMsg = m, renameErrorLoc = SrcLoc.NoLocation }
-
 lookupVisible :: LIdent -> RM (Maybe UniqueIdent)
 lookupVisible i = do
   vis <- gets visible
@@ -131,7 +126,7 @@ bindNewTopIdent t i = do
   vis <- lookupVisible i
   case vis of
     Nothing -> bindNewUniqueIdent t i
-    Just _ -> throwError $ RenameError {
+    Just _ -> lift $ throwE $ RenameError {
       renameErrorMsg = "Redefinition of toplevel name " ++ getOrigName i
      ,renameErrorLoc = srcLoc i }
 
@@ -141,7 +136,7 @@ bindNewUniqueIdent iType lIdent = do
   {- check that we do not bind a variable twice i.e. in a pattern -}
   local <- gets localBindings
   when (isJust $ Map.lookup origName local) $
-    throwError $ RenameError {
+    lift $ throwE $ RenameError {
        renameErrorMsg = "Redefinition of " ++ origName
        ,renameErrorLoc = srcLoc lIdent }
   vis <- lookupVisible lIdent
@@ -156,10 +151,10 @@ bindNewUniqueIdent iType lIdent = do
 
       (VarID, _) -> addNewBinding
       {- We throw an error if the csp-code tries to rebind a constructor or a channel ID -}
-      (_    , ConstrID) -> throwError $ RenameError {
+      (_    , ConstrID) -> lift $ throwE $ RenameError {
           renameErrorMsg = "Illigal reuse of Contructor " ++ origName
          ,renameErrorLoc = srcLoc lIdent }
-      (_    , ChannelID) -> throwError $ RenameError {
+      (_    , ChannelID) -> lift $ throwE $ RenameError {
           renameErrorMsg = "Illigal reuse of Channel " ++ origName
          ,renameErrorLoc = srcLoc lIdent }
 
@@ -222,7 +217,7 @@ useIdent :: LIdent -> RM ()
 useIdent lIdent = do
   vis <- lookupVisible lIdent
   case vis of
-    Nothing -> throwError $ RenameError {
+    Nothing -> lift $ throwE $ RenameError {
        renameErrorMsg = "Unbound Identifier :" ++ getOrigName lIdent
        ,renameErrorLoc = srcLoc lIdent }
     Just defIdent -> modify $ \s -> s

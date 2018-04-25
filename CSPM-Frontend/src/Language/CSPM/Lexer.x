@@ -223,11 +223,11 @@ alexMonadScan = do
     AlexError _
          -> lexError "lexical error"
     AlexSkip  inp' len -> do
-	alexSetInput inp'
-	alexMonadScan
+        alexSetInput inp'
+        alexMonadScan
     AlexToken inp' len action -> do
-	alexSetInput inp'
-	action inp len
+        alexSetInput inp'
+        action inp len
 
 scanner str = runAlex str $ scannerAcc []
   where
