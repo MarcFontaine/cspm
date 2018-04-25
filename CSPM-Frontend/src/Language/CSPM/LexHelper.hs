@@ -129,7 +129,7 @@ soakNewlines = worker
        (L_Newline, _) -> h1 : (worker $ h2:t)
        (_, L_Newline) | isH1NewLineConsumer -> worker $ h1:t
        (_, L_Newline) -> h1: (worker $ h2:t)
-       _   -> h1: (worker $ h2:t)
+       _   -> h1: worker (h2:t)
       where
         isH2NewLineConsumer = tokenClass h2 `Set.member` consumeNLBeforeToken
         isH1NewLineConsumer = tokenClass h1 `Set.member` consumeNLAfterToken

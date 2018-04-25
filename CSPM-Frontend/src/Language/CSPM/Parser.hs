@@ -35,7 +35,9 @@ import Language.CSPM.LexHelper (removeIgnoredToken)
 import Text.ParserCombinators.Parsec.ExprM
 
 import Text.ParserCombinators.Parsec
-  hiding (parse,eof,notFollowedBy,anyToken,label,ParseError,errorPos,token,newline)
+         hiding (parse, eof, notFollowedBy, anyToken, ParseError, token,
+                 newline)
+
 import Text.ParserCombinators.Parsec.Pos (newPos)
 import qualified Text.ParserCombinators.Parsec.Error as ParsecError
 import Data.Typeable (Typeable)
@@ -99,15 +101,13 @@ mkLabeledNode :: SrcLoc -> t -> PT (Labeled t)
 mkLabeledNode loc node = do
   i <- getStates nodeIdSupply
   updateState $ \s -> s { nodeIdSupply = succ $ nodeIdSupply s}
-  return $ Labeled {
+  return Labeled {
     nodeId = i
    ,srcLoc = loc
    ,unLabel = node }
 
 getStates :: (PState -> x) -> PT x
-getStates sel = do
-  st <- getState
-  return $ sel st
+getStates sel = sel <$> getState
 
 getNextPos :: PT Token
 getNextPos = do
@@ -120,16 +120,14 @@ getLastPos :: PT Token
 getLastPos = getStates lastTok
 
 getPos :: PT SrcLoc
-getPos = do
-  t<-getNextPos 
-  return $ mkSrcPos t
+getPos = mkSrcPos <$> getNextPos
 
 mkSrcSpan :: Token -> Token -> SrcLoc
 mkSrcSpan b e = SrcLoc.mkTokSpan b e
 
 {-# DEPRECATED mkSrcPos "simplify alternatives for sourcelocations" #-}
 mkSrcPos :: Token -> SrcLoc
-mkSrcPos l = SrcLoc.mkTokPos l
+mkSrcPos = SrcLoc.mkTokPos
 
 withLoc :: PT a -> PT (Labeled a)
 withLoc a = do
@@ -157,7 +155,7 @@ parseModule tokenList = do
     moduleSrcLoc = mkSrcSpan s e
     modulePragmas = mapMaybe getPragma tokenList
     moduleComments = mapMaybe getComment tokenList
-  return $ Module { .. }
+  return Module { .. }
   where
     getComment :: Token -> Maybe LocComment
     getComment t = case tokenClass t of
@@ -208,7 +206,7 @@ refineOp = withLoc $ do
   
 anyBuiltIn :: PT Const
 anyBuiltIn = do
-  tok <- tokenPrimExDefault (\t -> Just $ tokenClass t)
+  tok <- tokenPrimExDefault (Just . tokenClass)
   case tok of
     T_union  -> return F_union
     T_inter  -> return F_inter
@@ -245,10 +243,10 @@ lIdent =
       _ -> Nothing
 
 ident :: PT LIdent
-ident   = withLoc (lIdent >>= return . Ident)
+ident   = withLoc (Ident <$> lIdent)
 
 varExp :: PT LExp
-varExp= withLoc (ident >>= return . Var)
+varExp= withLoc (Var <$> ident)
 
 commaSeperator :: PT ()
 commaSeperator = token T_comma
@@ -266,7 +264,7 @@ parseComprehension :: PT [LCompGen]
 parseComprehension = token T_mid >> sepByComma (compGenerator <|> compGuard )
 
 compGuard :: PT LCompGen
-compGuard= withLoc (parseExp_noPrefix >>= return . Guard)
+compGuard= withLoc (Guard <$> parseExp_noPrefix)
 
 compGenerator :: PT LCompGen
 compGenerator = try $ withLoc $ do
@@ -285,7 +283,7 @@ comprehensionRep = withLoc $ do
     repGenerator :: PT LCompGen
     repGenerator = try $ withLoc $ do
       pat <- parsePattern
-      (token T_colon) <|> (token T_leftarrow)
+      token T_colon <|> token T_leftarrow
       exp <- parseExp_noPrefix
       return $ Generator pat exp
 
@@ -311,7 +309,7 @@ lsBody = liftM2 (,) parseRangeExp (optionMaybe parseComprehension)
     parseRangeExp :: PT LRange
     parseRangeExp = withLoc (rangeClosed <|> rangeOpen <|> rangeEnum)
 
-    rangeEnum = liftM RangeEnum $ sepByComma parseExp_noPrefix
+    rangeEnum = fmap RangeEnum $ sepByComma parseExp_noPrefix
 
     rangeClosed :: PT Range
     rangeClosed = try $ do
@@ -330,7 +328,7 @@ closureExp :: PT LExp
 closureExp = withLoc $ do
   token T_openPBrace
   expList <- sepByComma parseExp
-  gens <- optionMaybe $ parseComprehension
+  gens <- optionMaybe parseComprehension
   token T_closePBrace
   case gens of
     Nothing -> return $ Closure expList
@@ -339,7 +337,7 @@ closureExp = withLoc $ do
 intLit :: PT Integer
 intLit =
    -- " - {-comment-} 10 " is parsed as Integer(-10) "
-      (token T_minus >> linteger >>= return . negate)
+      negate <$> (token T_minus >> linteger)
   <|> linteger
   where 
     linteger :: PT Integer
@@ -679,33 +677,33 @@ proc_op_aparallel = try $ do
   a2 <- parseExp_noPrefix
   token T_closeBrack
   e <- getLastPos
-  return $ (\p1 p2 -> mkLabeledNode (mkSrcSpan s e ) $ ProcAParallel a1 a2 p1 p2 )
+  return (\p1 p2 -> mkLabeledNode (mkSrcSpan s e ) $ ProcAParallel a1 a2 p1 p2 )
 
 proc_op_lparallel :: PT (LExp -> LExp -> PT LExp)
 proc_op_lparallel = try $ do
   ren <- parseLinkList
   p <- getPos
-  return $ (\p1 p2 -> mkLabeledNode p $ ProcLinkParallel ren p1 p2)
+  return (\p1 p2 -> mkLabeledNode p $ ProcLinkParallel ren p1 p2)
 
 procRenaming :: PT (LExp -> PT LExp)
 procRenaming = do
   rens <- many1 procOneRenaming
-  return $ (\x -> foldl (>>=) (return x) rens)
+  return (\x -> foldl (>>=) (return x) rens)
 
 procOneRenaming :: PT (LExp -> PT LExp )
 procOneRenaming = try $ do
   s <- getNextPos
   token T_openBrackBrack
-  ren<-(sepBy parseRename commaSeperator)
+  ren <- sepBy parseRename commaSeperator
   gens <- optionMaybe $ withLoc parseComprehension
   token T_closeBrackBrack
-  e<-getLastPos
-  return $ (\p1 -> mkLabeledNode (mkSrcSpan s e ) $ ProcRenaming ren gens p1 )
+  e <- getLastPos
+  return (\p1 -> mkLabeledNode (mkSrcSpan s e ) $ ProcRenaming ren gens p1 )
 
 parseLinkList :: PT LLinkList
 parseLinkList = withLoc $ do
   token T_openBrack
-  linkList<-(sepBy parseLink commaSeperator)
+  linkList <- sepBy parseLink commaSeperator
   gens <- optionMaybe parseComprehension
   token T_closeBrack
   case gens of
@@ -857,7 +855,7 @@ topDeclList = sepByNewLine topDecl
      where
       tauRefineOp :: PT LTauRefineOp
       tauRefineOp = withLoc $ do 
-        tok <- tokenPrimExDefault (\t -> Just $ tokenClass t)
+        tok <- tokenPrimExDefault (Just . tokenClass)
         case tok of
          T_trace  -> return TauTrace
          T_Refine -> return TauRefine
@@ -869,7 +867,7 @@ topDeclList = sepByNewLine topDecl
     p       <- parseExp
     token T_openAssertBrack
     model   <- fdrModel
-    extmode <- many $ extsMode
+    extmode <- many extsMode
     ext     <-  case extmode of
                []   -> return Nothing
                [x]  -> return $ Just x
@@ -879,7 +877,7 @@ topDeclList = sepByNewLine topDecl
       where
        fdrModel :: PT LFDRModels
        fdrModel = withLoc $ do
-        tok <- tokenPrimExDefault (\t -> Just $ tokenClass t)
+        tok <- tokenPrimExDefault (Just . tokenClass)
         case tok of 
          T_deadlock  -> token T_free >> return DeadlockFree
          T_deterministic -> return Deterministic
@@ -903,9 +901,7 @@ topDeclList = sepByNewLine topDecl
              <?> "assert Declaration"
 
   parseAssertDecl :: PT LDecl
-  parseAssertDecl = withLoc $ do
-    e <- parseAssert
-    return $ Assert e
+  parseAssertDecl = withLoc $ Assert <$> parseAssert
 
   parseTransparent :: PT LDecl
   parseTransparent = withLoc $ do
@@ -1077,7 +1073,7 @@ testFollows p = do
   return res
 
 primExUpdatePos :: SourcePos -> Token -> t -> SourcePos
-primExUpdatePos pos t@(Token {}) _
+primExUpdatePos pos t@Token {} _
   = newPos (sourceName pos) (-1) (Token.unTokenId $ Token.tokenId t)
 
 primExUpdateState :: t -> Token -> t1 -> PState -> PState
@@ -1115,7 +1111,7 @@ wrapParseError ::
   -> Either ParsecError.ParseError ModuleFromParser
   -> Either ParseError ModuleFromParser
 wrapParseError _ (Right ast) = Right ast
-wrapParseError tl (Left err) = Left $ ParseError {
+wrapParseError tl (Left err) = Left ParseError {
    parseErrorMsg = pprintParsecError err
   ,parseErrorToken = errorTok
   ,parseErrorPos = tokenStart errorTok

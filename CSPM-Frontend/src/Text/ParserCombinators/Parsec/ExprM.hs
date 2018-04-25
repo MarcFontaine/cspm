@@ -36,15 +36,15 @@ data Operator t st a
     | Postfix (GenParser t st (a -> GenParser t st a))
 
 infixM :: 
-       (GenParser t st (a -> a -> GenParser t st a))
+       GenParser t st (a -> a -> GenParser t st a)
     -> Assoc 
     -> Operator t st a     
 infixM = Infix
 
-prefixM :: (GenParser t st (a -> GenParser t st a)) -> Operator t st a
+prefixM :: GenParser t st (a -> GenParser t st a) -> Operator t st a
 prefixM = Prefix
 
-postfixM :: (GenParser t st (a -> GenParser t st a)) -> Operator t st a
+postfixM :: GenParser t st (a -> GenParser t st a) -> Operator t st a
 postfixM = Postfix
 
 type OperatorTable t st a = [[Operator t st a]]
@@ -57,7 +57,7 @@ type OperatorTable t st a = [[Operator t st a]]
 -----------------------------------------------------------
 buildExpressionParser :: OperatorTable tok st a -> GenParser tok st a -> GenParser tok st a
 buildExpressionParser operators simpleExpr
-    = foldl (makeParser) simpleExpr operators
+    = foldl makeParser simpleExpr operators
     where
       makeParser term ops
         = let (rassoc,lassoc,nassoc

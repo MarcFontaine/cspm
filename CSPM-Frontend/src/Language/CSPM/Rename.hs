@@ -102,8 +102,8 @@ initialRState = RenameInfo {..}
 
 initPrelude :: RM ()
 initPrelude
-    = forM_ BuiltIn.builtIns $ \bi -> do
-        bindNewTopIdent BuiltInID (labeled $ Ident bi)
+    = forM_ BuiltIn.builtIns $
+         \bi -> bindNewTopIdent BuiltInID (labeled $ Ident bi)
 
 data RenameError
   = RenameError {
@@ -114,9 +114,8 @@ data RenameError
 instance Exception RenameError
 
 lookupVisible :: LIdent -> RM (Maybe UniqueIdent)
-lookupVisible i = do
-  vis <- gets visible
-  return $ Map.lookup (unIdent $ unLabel i) vis
+lookupVisible i
+  = Map.lookup (unIdent $ unLabel i) <$> gets visible
 
 getOrigName :: LIdent -> String
 getOrigName = unIdent . unLabel
@@ -126,7 +125,7 @@ bindNewTopIdent t i = do
   vis <- lookupVisible i
   case vis of
     Nothing -> bindNewUniqueIdent t i
-    Just _ -> lift $ throwE $ RenameError {
+    Just _ -> lift $ throwE RenameError {
       renameErrorMsg = "Redefinition of toplevel name " ++ getOrigName i
      ,renameErrorLoc = srcLoc i }
 
@@ -136,7 +135,7 @@ bindNewUniqueIdent iType lIdent = do
   {- check that we do not bind a variable twice i.e. in a pattern -}
   local <- gets localBindings
   when (isJust $ Map.lookup origName local) $
-    lift $ throwE $ RenameError {
+    lift $ throwE RenameError {
        renameErrorMsg = "Redefinition of " ++ origName
        ,renameErrorLoc = srcLoc lIdent }
   vis <- lookupVisible lIdent
@@ -151,10 +150,10 @@ bindNewUniqueIdent iType lIdent = do
 
       (VarID, _) -> addNewBinding
       {- We throw an error if the csp-code tries to rebind a constructor or a channel ID -}
-      (_    , ConstrID) -> lift $ throwE $ RenameError {
+      (_    , ConstrID) -> lift $ throwE RenameError {
           renameErrorMsg = "Illigal reuse of Contructor " ++ origName
          ,renameErrorLoc = srcLoc lIdent }
-      (_    , ChannelID) -> lift $ throwE $ RenameError {
+      (_    , ChannelID) -> lift $ throwE RenameError {
           renameErrorMsg = "Illigal reuse of Channel " ++ origName
          ,renameErrorLoc = srcLoc lIdent }
 
@@ -162,7 +161,7 @@ bindNewUniqueIdent iType lIdent = do
   where
     useExistingBinding :: UniqueIdent -> RM ()
     useExistingBinding ident = do
-      let ptr = unNodeId $ nodeId $ lIdent
+      let ptr = unNodeId $ nodeId lIdent
       modify $ \s -> s
         { identDefinition = IntMap.insert ptr ident $ identDefinition s }
 
@@ -197,7 +196,7 @@ bindNewUniqueIdent iType lIdent = do
       occupied <- gets usedNames
       let
          suffixes = "" : map show ([2..9] ++ [n + 10 .. ])
-         candidates = map ((++) oldName) suffixes
+         candidates = map (oldName ++ ) suffixes
          nextName = head $ filter (\x -> not $ Set.member x occupied) candidates
       modify $ \s -> s {usedNames = Set.insert nextName $ usedNames s}
       return (nextName,n)
@@ -217,7 +216,7 @@ useIdent :: LIdent -> RM ()
 useIdent lIdent = do
   vis <- lookupVisible lIdent
   case vis of
-    Nothing -> lift $ throwE $ RenameError {
+    Nothing -> lift $ throwE RenameError {
        renameErrorMsg = "Unbound Identifier :" ++ getOrigName lIdent
        ,renameErrorLoc = srcLoc lIdent }
     Just defIdent -> modify $ \s -> s
@@ -332,7 +331,7 @@ rnCommField f = case unLabel f of
   OutComm e -> rnExp e
 
 inCompGenL :: LCompGenList -> RM () -> RM ()
-inCompGenL l r = inCompGen (unLabel l) r
+inCompGenL l = inCompGen (unLabel l)
 
 inCompGen :: [LCompGen] -> RM () -> RM ()
 inCompGen (h:t) ret = localScope $ do

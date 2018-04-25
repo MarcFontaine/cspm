@@ -21,7 +21,7 @@ module Language.CSPM.ReorderBindings
   )
 where
 
-import Language.CSPM.AST hiding (prologMode)
+import Language.CSPM.AST
 import qualified Language.CSPM.AST as AST
 import qualified Language.CSPM.SrcLoc as SrcLoc
 

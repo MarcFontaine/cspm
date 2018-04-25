@@ -10,7 +10,8 @@
 --
 -- This module contains the data type PrimToken.
 
-{-# LANGUAGE DeriveDataTypeable, GeneralizedNewtypeDeriving, DeriveGeneric #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module Language.CSPM.TokenClasses
 where

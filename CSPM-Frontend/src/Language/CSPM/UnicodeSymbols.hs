@@ -57,7 +57,7 @@ tableLine (char,tok,string) = concat
 -}
 
 
-lookupDefaultSymbol :: PrimToken -> (Maybe (Char,String))
+lookupDefaultSymbol :: PrimToken -> Maybe (Char,String)
 lookupDefaultSymbol = (Array.!) table
   where
     table :: Array.Array PrimToken (Maybe (Char,String))
@@ -66,6 +66,6 @@ lookupDefaultSymbol = (Array.!) table
               [(tok,Just (uni,ascii)) | (uni,tok,ascii) <- unicodeSymbols]
 
 lookupToken :: Char -> Maybe PrimToken
-lookupToken = flip (Map.lookup) symbolMap
+lookupToken = flip Map.lookup symbolMap
   where
     symbolMap = Map.fromList [(uni,tok) | (uni,tok,_string) <- unicodeSymbols]

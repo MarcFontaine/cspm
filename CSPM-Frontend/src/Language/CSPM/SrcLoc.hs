@@ -76,7 +76,7 @@ getStartOffset x = case x of
 getTokenLen :: SrcLoc -> SrcOffset
 getTokenLen x = case x of
   TokPos t -> tokenLen t
-  TokSpan s e   -> (alexPos $ tokenStart e) - (alexPos $ tokenStart s) + tokenLen e
+  TokSpan s e   -> alexPos (tokenStart e) - alexPos (tokenStart s) + tokenLen e
   FixedLoc {}  -> fixedLen x
   _ -> error "getTokenLen : info not available"
 
@@ -96,8 +96,8 @@ getEndCol x = case x of
 
 getEndOffset :: SrcLoc -> SrcOffset
 getEndOffset x = case x of
-  TokSpan _s e  -> (alexPos $ tokenStart e) + tokenLen e
-  TokPos t -> (alexPos $ tokenStart t) + tokenLen t
+  TokSpan _s e  -> alexPos (tokenStart e) + tokenLen e
+  TokPos t -> alexPos (tokenStart t) + tokenLen t
   FixedLoc {}  -> fixedEndOffset x
   _ ->  error "no SrcOffset available"
 

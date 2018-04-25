@@ -66,7 +66,7 @@ benchmarkFrontend fileName = do
   src <- readFile fileName
 
   putStrLn $ "Reading File " ++ fileName
-  startTime <- (return $ length src) >> getCPUTime
+  startTime <- return (length src) >> getCPUTime
   tokenList <- Lexer.lexInclude src >>= eitherToExc
   time_have_tokens <- getCPUTime
 
@@ -76,7 +76,7 @@ benchmarkFrontend fileName = do
   (astNew, _renaming) <- eitherToExc $ renameModule ast
   time_have_renaming <- getCPUTime
 
-  putStrLn $ "Parsing OK"
+  putStrLn "Parsing OK"
   putStrLn $ "lextime : " ++ showTime (time_have_tokens - startTime)
   putStrLn $ "parsetime : " ++ showTime(time_have_ast - time_have_tokens)
   putStrLn $ "renamingtime : " ++ showTime (time_have_renaming - time_have_ast)
