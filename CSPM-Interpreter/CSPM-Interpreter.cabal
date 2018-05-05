@@ -1,5 +1,5 @@
 Name:                CSPM-Interpreter
-Version:             0.7.1.0
+Version:             0.7.1.1
 
 Synopsis:            An interpreter for CSPM
 Description:
@@ -11,10 +11,10 @@ Description:
 License:             BSD3
 category:            Language,Formal Methods,Concurrency
 License-File:        LICENSE
-Author:              2010 - 2017 Marc Fontaine <Marc.Fontaine@gmx.de>
+Author:              2010 - 2018 Marc Fontaine <Marc.Fontaine@gmx.de>
 Maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>
 Stability:           experimental
-Tested-With:         GHC == 8.2.1
+Tested-With:         GHC == 8.4.2
 Cabal-Version:       >= 1.24
 Build-type: Simple
 Extra-Source-Files:  README.md

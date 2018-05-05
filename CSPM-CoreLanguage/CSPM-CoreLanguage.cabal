@@ -1,5 +1,5 @@
 Name:                CSPM-CoreLanguage
-Version:             0.3.1.0
+Version:             0.3.1.1
 Synopsis:            Definition of a CSP core-language. 
 Description:
   This package contains an interface for the CSP core-language.
@@ -10,10 +10,10 @@ Description:
 Category:            Language,Formal Methods,Concurrency
 License:             BSD3
 License-File:        LICENSE
-Author:              2010 - 2017 Marc Fontaine <Marc.Fontaine@gmx.de>
+Author:              2010 - 2018 Marc Fontaine <Marc.Fontaine@gmx.de>
 Maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>
 Stability:           experimental
-Tested-With:         GHC == 8.2.1
+Tested-With:         GHC == 8.4.2
 Cabal-Version:       >= 1.24
 Build-Type:          Simple
 Extra-Source-Files:  README.md

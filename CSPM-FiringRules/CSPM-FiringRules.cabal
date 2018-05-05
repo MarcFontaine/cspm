@@ -1,5 +1,5 @@
 name:                CSPM-FiringRules
-version:             0.4.4.0
+version:             0.4.4.1
 synopsis:            Firing rules semantic of CSPM
 description:
   This package contains functions for computing the transitions of a CSP process
@@ -16,10 +16,10 @@ category:            Language,Formal Methods,Concurrency
 build-type:          Simple
 license:             BSD3
 license-file:        LICENSE
-author:              2010 - 2017 Marc Fontaine <Marc.Fontaine@gmx.de>
+author:              2010 - 2018 Marc Fontaine <Marc.Fontaine@gmx.de>
 maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>
 stability:           experimental
-tested-With:         GHC == 8.2.1
+tested-With:         GHC == 8.4.2
 
 cabal-Version:       >= 1.24
 Extra-Source-Files:  README.md

@@ -16,7 +16,7 @@ License-File:        LICENSE
 Author:              Marc Fontaine 2007 - 2018
 Maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>, me@dobrikov.biz
 Stability:           maintained
-Tested-With:         GHC == 8.2.1
+Tested-With:         GHC == 8.4.2
 cabal-Version:       >= 1.24
 build-type: Simple
 Extra-Source-Files:  README.md

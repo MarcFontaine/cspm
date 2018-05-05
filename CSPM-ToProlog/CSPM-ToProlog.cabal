@@ -1,5 +1,5 @@
 Name:                CSPM-ToProlog
-Version:             0.5.5.0
+Version:             0.5.5.1
 Synopsis:            some modules specific for the ProB tool
 Description:
   This package contains a translation from a CSPM AST to the representation
@@ -9,10 +9,10 @@ Description:
 License:             BSD3
 category:            Formal Methods
 License-File:        LICENSE
-Author:              2006-2017 Marc Fontaine <Marc.Fontaine@gmx.de>
+Author:              2006-2018 Marc Fontaine <Marc.Fontaine@gmx.de>
 Maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>
 Cabal-Version:  >= 1.24
-Tested-With:    GHC==8.2.1
+Tested-With:    GHC==8.4.2
 Build-Type:     Simple
 Extra-Source-Files:  README.md
                     

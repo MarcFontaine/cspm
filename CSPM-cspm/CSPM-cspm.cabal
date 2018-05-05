@@ -1,5 +1,5 @@
 Name:                CSPM-cspm
-Version:             0.8.1.0
+Version:             0.8.1.1
 
 Synopsis:            cspm command line tool for analyzing CSPM specifications.
 Description:
@@ -9,11 +9,11 @@ Description:
 License:             BSD3
 category:            Language, Formal Methods, Concurrency
 License-File:        LICENSE
-Author:              Marc Fontaine <Marc.Fontaine@gmx.de>
+Author:              Marc Fontaine 2007 - 2018
 Maintainer:          Marc Fontaine <Marc.Fontaine@gmx.de>
 cabal-Version:       >= 1.24
 build-type:          Simple
-Tested-With:         GHC == 8.2.1
+Tested-With:         GHC == 8.4.2
 Stability:           experimental
 Extra-Source-Files:  README.md
                     ,demo/lua/cspmPrelude.lua
