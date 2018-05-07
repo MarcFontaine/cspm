@@ -1,0 +1,7 @@
+packages:
+  CSPM-CoreLanguage
+  CSPM-FiringRules
+  CSPM-Frontend
+  CSPM-Interpreter
+  CSPM-ToProlog
+  CSPM-cspm
