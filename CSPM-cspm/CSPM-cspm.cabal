@@ -1,5 +1,5 @@
 Name:                CSPM-cspm
-Version:             0.8.1.1
+Version:             0.8.1.2
 
 Synopsis:            cspm command line tool for analyzing CSPM specifications.
 Description:
@@ -47,7 +47,7 @@ Executable cspm
     ,transformers >= 0.5
     ,syb >= 0.7 && <0.8
     ,prettyclass >= 1.0 && < 1.1
-    ,hslua >=0.3.12 && <0.4
+--    ,hslua >=0.3.12 && <0.4
 
   GHC-Options:
     -threaded -funbox-strict-fields -O2 -Wall -fno-warn-orphans -rtsopts
@@ -68,9 +68,9 @@ Executable cspm
     CSPM.LTS.ToCsp
     CSPM.LTS.ToDot
     CSPM.LTS.Deadlock
-    CSPM.Lua
+--    CSPM.Lua
     Language.CSPM.AstToXML
-    Scripting.LuaUtils
+--    Scripting.LuaUtils
     Paths_CSPM_cspm
 
 Library
@@ -88,7 +88,7 @@ Library
     ,transformers >= 0.5
     ,syb >= 0.7 && <0.8
     ,prettyclass >= 1.0 && < 1.1
-    ,hslua >=0.3.12 && <0.4
+--    ,hslua >=0.3.12 && <0.4
 
   GHC-Options:
     -funbox-strict-fields -O2 -Wall -fno-warn-orphans
@@ -108,9 +108,9 @@ Library
     CSPM.LTS.ToCsp
     CSPM.LTS.ToDot
     CSPM.LTS.Deadlock
-    CSPM.Lua
+--    CSPM.Lua
     Language.CSPM.AstToXML
 
   Other-modules:
     Paths_CSPM_cspm
-    Scripting.LuaUtils
+--    Scripting.LuaUtils

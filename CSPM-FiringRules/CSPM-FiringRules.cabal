@@ -35,7 +35,7 @@ flag QuickCheck
 library
   build-Depends:
      CSPM-CoreLanguage >= 0.3 && < 0.4
-    ,tree-monad >= 0.3 && < 0.4
+    ,tree-monad  >= 0.3 && < 0.4
     ,parallel-tree-search >=0.4 && < 0.5
     ,base >= 4.0 && < 5.0
     ,containers >= 0.5 && < 0.6

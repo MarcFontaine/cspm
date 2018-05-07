@@ -29,7 +29,7 @@ import CSPM.LTS.MkLtsDFS (mkLtsDFS)
 import CSPM.LTS.ToCsp (ltsToCsp)
 import CSPM.LTS.ToDot (mkDotFile)
 import CSPM.Assert (checkFileAsserts, formatAssertResults)
-import CSPM.Lua (runLua)
+--import CSPM.Lua (runLua)
 
 import Language.CSPM.Frontend
   (parseFile, frontendVersion
@@ -76,7 +76,7 @@ execCommand Info {..} = do
     ,"  cspm info",nl
     ,"  cspm eval '3+2'",nl
     ,nl
-    ,"Copyright (c) Marc Fontaine 2007-2017",nl
+    ,"Copyright (c) Marc Fontaine 2007-2018",nl
     ,"Source code available at: http://hackage.haskell.org/package/CSPM-cspm",nl
     ,"https://github.com/MarcFontaine/cspm",nl
     ,"Email : Marc.Fontaine@gmx.de",nl
@@ -85,7 +85,9 @@ execCommand Info {..} = do
 
 execCommand Lua {..} = do
   src <- readFile file
-  runLua src file rest
+  error "lua disabled"
+--  runLua src file rest
+
 execCommand Translate {..} = do
   when (null $ catMaybes
      [prologOut, xmlOut, prettyOut, addUnicode, removeUnicode]) $ do
