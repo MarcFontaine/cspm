@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  Language.CSPM.AST
--- Copyright   :  (c) Fontaine 2008 - 2012
+-- Copyright   :  (c) Fontaine 2008 - 2018
 -- License     :  BSD3
 -- 
 -- Maintainer  :  Fontaine@cs.uni-duesseldorf.de
@@ -12,8 +12,12 @@
 -- This is the AST that is computed by the parser.
 -- For historical reasons, it is rather unstructured.
 
-{-# LANGUAGE DeriveDataTypeable, GeneralizedNewtypeDeriving,DeriveGeneric #-}
-{-# LANGUAGE EmptyDataDecls, RankNTypes #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE EmptyDataDecls #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE EmptyDataDeriving #-}
 {-# LANGUAGE RecordWildCards #-}
 module Language.CSPM.AST
 where
@@ -22,7 +26,7 @@ import Language.CSPM.Token
 import Language.CSPM.SrcLoc (SrcLoc(..))
 
 import Data.Typeable (Typeable)
-import Data.Generics.Basics (Data)
+import Data.Generics.Basics (Data, toConstr, gunfold, dataTypeOf)
 import GHC.Generics (Generic)
 import Data.IntMap (IntMap)
 import Data.Map (Map)
@@ -108,10 +112,14 @@ data Module a = Module {
   ,modulePragmas :: [Pragma]
   } deriving (Eq, Ord, Show, Typeable, Data, Generic)
 
+-- data FromParser deriving (Typeable, Generic, Data, Eq) -- ghc-8.4.1
 data FromParser deriving (Typeable, Generic)
-{- https://ghc.haskell.org/trac/ghc/ticket/7401 fix waring in 7.10 ? -}
-instance Data FromParser
-instance Eq FromParser
+instance Data FromParser where
+  gunfold _ _ _ = error "instance Data FromParser"
+  toConstr = error "instance Data FromParser"
+  dataTypeOf =  error "instance Data FromParser"
+instance Eq FromParser where
+  (==) = error "instance Eq FromParser"
 
 castModule :: Module a -> Module b
 castModule Module {..} = Module {..}
