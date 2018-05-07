@@ -21,7 +21,10 @@
 --  make seperate nonoverloaded functions for building terms.
 -}
 
-{-# LANGUAGE TypeSynonymInstances , FlexibleInstances, UndecidableInstances  #-}
+{-# OPTIONS_GHC -Wno-dodgy-imports #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE OverlappingInstances #-}
 
 module Language.Prolog.PrettyPrint.Direct

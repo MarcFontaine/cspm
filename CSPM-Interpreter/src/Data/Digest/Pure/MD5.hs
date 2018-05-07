@@ -14,11 +14,11 @@
 -----------------------------------------------------------------------------
 
 module Data.Digest.Pure.MD5
-	(
-          MD5Digest (..)
-        , mixRaw
-        , md5Init
-        ) where
+  (
+    MD5Digest (..)
+  , mixRaw
+  , md5Init
+  ) where
 
 import Data.Word
 import Data.Bits

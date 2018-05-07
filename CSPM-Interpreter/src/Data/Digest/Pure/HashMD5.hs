@@ -11,18 +11,19 @@
 -----------------------------------------------------------------------------
 
 module Data.Digest.Pure.HashMD5
-	(
-          MD5Digest
-        , Hash(..)
-        , md5Init
-        , mixRaw
-        , mix
-        , mix3
-        , mix4
-        , mix5
-        , mixInt
-        , foldHash
-        ) where
+  (
+    MD5Digest
+  , Hash(..)
+  , md5Init
+  , mixRaw
+  , mix
+  , mix3
+  , mix4
+  , mix5
+  , mixInt
+  , foldHash
+  )
+where
 
 import Data.Digest.Pure.MD5
 import Data.Char
