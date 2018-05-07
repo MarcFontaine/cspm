@@ -45,9 +45,9 @@ matrix:
 
   # Build with the newest GHC and cabal-install. This is an accepted failure,
   # see below.
-  - env: BUILD=cabal GHCVER=head  CABALVER=head  ALEXVER=3.1.7
-    compiler: ": #GHC HEAD"
-    addons: {apt: {packages: [cabal-install-head,ghc-head,alex-3.1.7], sources: [hvr-ghc]}}
+#  - env: BUILD=cabal GHCVER=head  CABALVER=head  ALEXVER=3.1.7
+#    compiler: ": #GHC HEAD"
+#    addons: {apt: {packages: [cabal-install-head,ghc-head,alex-3.1.7], sources: [hvr-ghc]}}
 
 #  - env: BUILD=stack ARGS="--resolver lts-11"
 #    compiler: ": #stack 8.2.2"
