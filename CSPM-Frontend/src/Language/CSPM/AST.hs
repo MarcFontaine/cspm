@@ -17,7 +17,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE EmptyDataDecls #-}
 {-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE EmptyDataDeriving #-}
+-- {-# LANGUAGE EmptyDataDeriving #-}
 {-# LANGUAGE RecordWildCards #-}
 module Language.CSPM.AST
 where
