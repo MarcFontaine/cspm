@@ -29,7 +29,6 @@ import CSPM.FiringRules.Rules
 import CSPM.FiringRules.Search
 
 import Control.Monad
-import Control.Applicative
 import Data.Either as Either
 import Data.List as List
 

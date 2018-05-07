@@ -32,7 +32,6 @@ import qualified Data.List as List
 import Test.QuickCheck.Arbitrary
 import Test.QuickCheck.Gen
 import Control.Monad
-import Control.Applicative
 
 data M1
 

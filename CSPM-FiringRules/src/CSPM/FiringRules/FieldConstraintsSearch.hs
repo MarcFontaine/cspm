@@ -33,7 +33,6 @@ import CSPM.FiringRules.Search
 
 import Control.Arrow
 import Control.Monad.State
-import Control.Applicative
 import Data.Maybe
 import qualified Data.List as List
 

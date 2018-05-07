@@ -22,7 +22,6 @@ module CSPM.FiringRules.EnumerateEventsList
 where
 
 import CSPM.CoreLanguage
-import CSPM.CoreLanguage.Event
 import CSPM.FiringRules.Rules
 import qualified CSPM.FiringRules.EnumerateEvents as EE
 import CSPM.FiringRules.Search (runSearch)

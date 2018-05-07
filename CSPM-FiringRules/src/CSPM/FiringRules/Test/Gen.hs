@@ -12,7 +12,9 @@
 --
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE FlexibleInstances,TypeSynonymInstances #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 module CSPM.FiringRules.Test.Gen where
 
@@ -23,7 +25,6 @@ import CSPM.FiringRules.Rules
 import Test.QuickCheck.Arbitrary
 import Test.QuickCheck.Gen
 import Control.Monad
-import Control.Applicative
 import qualified Data.List as List
 
 class (BL i) => Arb i where

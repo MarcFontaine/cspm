@@ -31,7 +31,6 @@ import Data.Set (Set)
 import qualified Data.Set as Set
 import qualified Data.List as List
 import Control.Monad
-import Control.Applicative
 
 data M2
 m2 :: M2
