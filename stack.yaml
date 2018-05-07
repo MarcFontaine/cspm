@@ -1,0 +1,10 @@
+allow-newer: true
+resolver: nightly-2018-04-24
+
+packages:
+- ./CSPM-CoreLanguage
+- ./CSPM-FiringRules
+- ./CSPM-Frontend
+- ./CSPM-Interpreter
+- ./CSPM-ToProlog
+- ./CSPM-cspm

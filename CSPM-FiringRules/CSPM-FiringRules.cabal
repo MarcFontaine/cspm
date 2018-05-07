@@ -61,7 +61,7 @@ library
 
   if flag(QuickCheck)
     build-depends:
-      QuickCheck >= 2.6 && < 2.11
+      QuickCheck >= 2.6 && < 2.12
       ,random    >= 1.0 && < 1.2
     exposed-modules:
       CSPM.FiringRules.Test.Test
