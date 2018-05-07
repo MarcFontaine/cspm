@@ -11,7 +11,12 @@
 -- Convert an AST to Prolog. An experiment with the new GHC-Generic extentions
 -- This would be more compact with SYB.
 
-{-# LANGUAGE TypeOperators,FlexibleInstances, FlexibleContexts, DefaultSignatures, OverlappingInstances #-}
+{-# OPTIONS_GHC -Wno-dodgy-imports #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE OverlappingInstances #-}
 
 module Language.CSPM.AstToProlog
   (

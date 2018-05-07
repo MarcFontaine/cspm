@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      :  CSPM.LTS.ToCsp
--- Copyright   :  (c) Fontaine 2009 - 2011
+-- Copyright   :  (c) Fontaine 2009 - 2018
 -- License     :  BSD
 -- 
 -- Maintainer  :  Fontaine@cs.uni-duesseldorf.de
@@ -15,7 +15,8 @@ module CSPM.LTS.ToCsp
   ltsToCsp
   )
 where
-
+{-# OPTIONS_GHC -Wno-dodgy-imports #-}
+  
 import Prelude hiding ((<>))
 import CSPM.CoreLanguage hiding (Field)
 
@@ -23,7 +24,7 @@ import CSPM.Interpreter (INT) -- todo : remove this dependency
 import CSPM.FiringRules.Rules
 import CSPM.FiringRules.Verifier (viewRule)
 
-import CSPM.Interpreter.Hash -- todo : remove this depnedency
+import CSPM.Interpreter.Hash -- todo : remove this dependency
 
 import CSPM.LTS.LTS
 
